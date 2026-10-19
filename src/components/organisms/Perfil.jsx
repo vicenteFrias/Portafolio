@@ -1,4 +1,4 @@
-import { Card, Row, Col, Typography, Space, Avatar, Progress, Tag } from 'antd';
+import { Card, Row, Col, Typography, Space, Avatar, Progress, Tag, Divider } from 'antd';
 import {
     UserOutlined,
     ArrowRightOutlined,
@@ -8,22 +8,24 @@ import {
     GlobalOutlined,
     IdcardOutlined,
     LinkedinOutlined,
+    GithubOutlined,
+    QuestionCircleOutlined,
 } from '@ant-design/icons';
 import { Boton } from '../atoms/Boton';
 import { Badge } from '../atoms/Badge';
-import { datosPersonales } from '../../Data/PortafolioData';
+import { datosPersonales } from '../../data/portafolioData';
 import Retrato from '../../assets/Retrato.png';
 
 const { Title, Paragraph, Text } = Typography;
 
+// Reúne la presentación, e informacion principal personal.
 export const Perfil = ({ alIrAProyectos, alIrAContacto }) => {
     return (
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
-            {/* Tarjeta Principal de Perfil */}
+            {/* Tarjeta Principal de Presentación y mi informacion personal */}
             <Card
-                bordered={false}
+                variant="borderless"
                 styles={{ body: { padding: 0 } }}
-                bodyStyle={{ padding: 0 }}
                 style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}
             >
                 <Row align="stretch">
@@ -39,25 +41,36 @@ export const Perfil = ({ alIrAProyectos, alIrAContacto }) => {
                         }}
                     >
                         <Avatar
-                            size={120}
+                            size={130}
                             src={datosPersonales?.foto || Retrato}
                             alt={datosPersonales?.nombre || 'Vicente Frias'}
                             icon={<UserOutlined />}
                             style={{
                                 backgroundColor: '#ffffff',
                                 border: '4px solid #ffffff',
-                                boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+                                boxShadow: '0 6px 16px rgba(0,0,0,0.2)',
                             }}
                         />
                     </Col>
                     <Col xs={24} md={16} style={{ padding: 32 }}>
                         <Badge texto="DESARROLLADOR • 24 AÑOS" />
-                        <Title level={2} style={{ marginTop: 8, marginBottom: 8 }}>
-                            {datosPersonales?.nombre || 'Vicente Frias'}
+                        <Title level={2} style={{ marginTop: 8, marginBottom: 4 }}>
+                            {datosPersonales?.nombre}
                         </Title>
-                        <Paragraph type="secondary" style={{ fontSize: '1rem' }}>
-                            {datosPersonales?.titulo || 'Analista Programador'}
-                        </Paragraph>
+                        <Text strong style={{ color: '#2563eb', fontSize: '1.05rem', display: 'block', marginBottom: 12 }}>
+                            {datosPersonales?.titulo}
+                        </Text>
+
+                        {/* Subsección "¿Quién soy?": Requerimiento explícito de la rúbrica */}
+                        <div style={{ background: '#f8fafc', padding: '12px 16px', borderRadius: 10, marginBottom: 20 }}>
+                            <Text strong style={{ color: '#1e293b', display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+                                <QuestionCircleOutlined style={{ color: '#2563eb' }} /> ¿Quién soy?
+                            </Text>
+                            <Paragraph type="secondary" style={{ margin: 0, fontSize: '0.92rem', lineHeight: 1.6 }}>
+                                {datosPersonales?.quienSoy}
+                            </Paragraph>
+                        </div>
+
                         <Space wrap size="middle">
                             <Boton tipo="primary" icon={<ArrowRightOutlined />} onClick={alIrAProyectos}>
                                 Explorar proyectos
@@ -70,9 +83,10 @@ export const Perfil = ({ alIrAProyectos, alIrAContacto }) => {
                 </Row>
             </Card>
 
-            {/* Fila de Tarjetas Complementarias */}
+            {/* Fila de Tarjetas Extras, datos de Contacto e idiomas */}
+            {/* Las columnas se apilan en pantallas pequeñas y se muestran lado a lado en otras pantallas pequeñas*/}
             <Row gutter={[16, 16]}>
-                {/* Card: Datos Personales y Contacto */}
+                {/* Datos de contacto y redes */}
                 <Col xs={24} md={12}>
                     <Card
                         title={
@@ -81,7 +95,7 @@ export const Perfil = ({ alIrAProyectos, alIrAContacto }) => {
                                 <span>Datos Personales</span>
                             </Space>
                         }
-                        bordered={false}
+                        variant="borderless"
                         style={{ borderRadius: 16, height: '100%', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}
                     >
                         <Space direction="vertical" size="middle" style={{ width: '100%' }}>
@@ -115,27 +129,31 @@ export const Perfil = ({ alIrAProyectos, alIrAContacto }) => {
                                 </div>
                             </Space>
 
-                            <Space align="center">
-                                <Avatar icon={<LinkedinOutlined />} style={{ backgroundColor: '#eff6ff', color: '#2563eb' }} />
-                                <div>
-                                    <Text type="secondary" style={{ fontSize: '0.75rem', display: 'block', fontWeight: 600 }}>
-                                        LINKEDIN
-                                    </Text>
-                                    <a
-                                        href={datosPersonales?.linkedin}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        style={{ color: '#2563eb', fontWeight: 600 }}
-                                    >
-                                        Ver Perfil Profesional
-                                    </a>
-                                </div>
+                            <Divider style={{ margin: '8px 0' }} />
+
+                            <Space wrap size="middle">
+                                <a
+                                    href={datosPersonales?.linkedin}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#2563eb', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 6 }}
+                                >
+                                    <LinkedinOutlined /> LinkedIn
+                                </a>
+                                <a
+                                    href={datosPersonales?.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#1e293b', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 6 }}
+                                >
+                                    <GithubOutlined /> GitHub
+                                </a>
                             </Space>
                         </Space>
                     </Card>
                 </Col>
 
-                {/* Card: Idiomas */}
+                {/* Idiomas */}
                 <Col xs={24} md={12}>
                     <Card
                         title={
@@ -144,7 +162,7 @@ export const Perfil = ({ alIrAProyectos, alIrAContacto }) => {
                                 <span>Idiomas</span>
                             </Space>
                         }
-                        bordered={false}
+                        variant="borderless"
                         style={{ borderRadius: 16, height: '100%', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}
                     >
                         <Space direction="vertical" size="large" style={{ width: '100%' }}>

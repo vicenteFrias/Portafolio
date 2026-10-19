@@ -1,13 +1,21 @@
 import { Space, Typography } from 'antd';
-import { CheckCircleOutlined } from '@ant-design/icons';
+import { CheckIcon } from '../atoms/Icono';
 
 const { Text } = Typography;
 
-export const Display = ({ titulo, descripcion }) => (
+/**
+ * Componente modular que combina el átomo CheckIcon con componentes de tipografía
+ * para mostrar un elemento con viñeta destacada, título y descripción.
+ */
+export const Display = ({
+    titulo,
+    descripcion,
+    icono = <CheckIcon />,
+}) => (
     <Space align="start" style={{ marginBottom: 12 }}>
-        <CheckCircleOutlined style={{ color: '#2563eb', fontSize: 18, marginTop: 2 }} />
+        {icono}
         <div>
-            <Text strong style={{ display: 'block' }}>{titulo}</Text>
+            <Text strong style={{ display: 'block', color: '#1e293b' }}>{titulo}</Text>
             {descripcion && <Text type="secondary" style={{ fontSize: '0.85rem' }}>{descripcion}</Text>}
         </div>
     </Space>

@@ -10,9 +10,12 @@ import { FormularioContacto } from '../components/organisms/FormularioContacto';
 import { FooterPagina } from '../components/organisms/Footer';
 
 export const Inicio = () => {
+    // Controla la sección actualmente visible en el área de contenido principal
     const [seccionActiva, setSeccionActiva] = useState('personal');
+    // Controla la visibilidad del modal de contacto
     const [modalContactoAbierto, setModalContactoAbierto] = useState(false);
 
+    // Enrutador interno para navegación SPA
     const manejarNavegacion = (key) => {
         if (key === 'contacto') {
             setModalContactoAbierto(true);
@@ -21,6 +24,7 @@ export const Inicio = () => {
         }
     };
 
+    // Renderizado condicional del organismo correspondiente a la sección seleccionada
     const renderizarOrganismoCentrado = () => {
         switch (seccionActiva) {
             case 'personal':

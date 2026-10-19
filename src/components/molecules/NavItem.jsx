@@ -1,4 +1,6 @@
+// Muestra una opción de navegación y avisa al componente padre cuando se selecciona.
 export const NavItem = ({ label, isActive, onClick }) => {
+    // El estilo cambia según si esta opción corresponde a la sección actual.
     const style = {
         padding: '10px 16px',
         borderRadius: '8px',
@@ -10,6 +12,7 @@ export const NavItem = ({ label, isActive, onClick }) => {
     };
 
     return (
+        // Al hacer clic, ejecuta la función de navegación recibida por props.
         <div style={style} onClick={onClick}>
             {label}
         </div>

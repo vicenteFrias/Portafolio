@@ -1,4 +1,3 @@
-import React from 'react';
 import { Menu, Avatar, Space, Typography } from 'antd';
 import {
     UserOutlined,
@@ -12,7 +11,9 @@ import { datosPersonales } from '../../data/portafolioData';
 
 const { Text } = Typography;
 
+// Presenta los datos básicos y permite elegir qué sección mostrar.
 export const NavBar = ({ seccionActiva, alSeleccionarSeccion }) => {
+    // Cada opción tiene una clave usada para indicar y cambiar la sección activa.
     const opciones = [
         { key: 'personal', icon: <UserOutlined />, label: 'Información' },
         { key: 'proyectos', icon: <FolderOutlined />, label: 'Proyectos' },
@@ -30,6 +31,7 @@ export const NavBar = ({ seccionActiva, alSeleccionarSeccion }) => {
                 </Avatar>
                 <Text strong>{datosPersonales?.nombre || 'Vicente Frias'}</Text>
             </Space>
+            {/* El menú marca la sección actual y avisa cuando se elige otra. */}
             <Menu
                 mode="inline"
                 selectedKeys={[seccionActiva]}

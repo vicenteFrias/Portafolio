@@ -11,6 +11,7 @@ export const useProyectos = () => {
             setCargando(false);
         }, 600);
 
+        // Limpieza de recursos al desmontar el componente
         return () => clearTimeout(temporizador);
     }, []);
 

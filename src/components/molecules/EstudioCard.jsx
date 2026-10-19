@@ -2,6 +2,7 @@ import { Card, Typography, Tag } from 'antd';
 
 const { Text } = Typography;
 
+// Recibe los datos de un estudio y los muestra en una tarjeta.
 export const EstudioCard = ({ estudio }) => {
     return (
         <Card
@@ -15,6 +16,7 @@ export const EstudioCard = ({ estudio }) => {
                 },
             }}
             title={
+                // El título y el año vienen del objeto estudio recibido por props.
                 <div style={{ whiteSpace: 'normal', wordBreak: 'break-word', paddingRight: 8, lineHeight: '1.4', fontWeight: 600 }}>
                     {estudio.titulo}
                 </div>
@@ -25,6 +27,7 @@ export const EstudioCard = ({ estudio }) => {
                 </Tag>
             }
         >
+            {/* La institución aparece como texto secundario debajo del título. */}
             <Text type="secondary">{estudio.institucion}</Text>
         </Card>
     );

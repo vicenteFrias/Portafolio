@@ -1,5 +1,3 @@
-// renderHook permite probar Custom Hooks de forma aislada sin crear un componente falso.
-// act: envuelve las acciones que actualizan el estado de React para evitar advertencias y asegurar consistencia.
 import { renderHook, act } from '@testing-library/react';
 import { describe, test, expect, vi } from 'vitest';
 import { useContacto } from '../hooks/useContacto';
@@ -7,13 +5,13 @@ import { useProyectos } from '../hooks/useProyectos';
 
 describe('Pruebas en Custom Hooks', () => {
     test('useContacto debe manejar el estado de envío y reinicio correctamente', () => {
-        //  Inicializamos el hook
+        // Inicializamos el hook
         const { result } = renderHook(() => useContacto());
 
-        //  Verificamos el estado inicial
+        // Verificamos estado inicial
         expect(result.current.enviado).toBe(false);
 
-        //  Simulamos la acción de enviar el formulario (debe ir dentro de un act() porque cambia el estado)
+        // Simulamos envío de datos
         act(() => {
             result.current.enviarFormulario({
                 nombre: 'Vicente Frias',
@@ -21,37 +19,34 @@ describe('Pruebas en Custom Hooks', () => {
                 mensaje: 'Prueba de mensaje',
             });
         });
-        //  Comprobamos que el estado cambió a verdadero
         expect(result.current.enviado).toBe(true);
 
-        //  Simulamos el reinicio del formulario
+        // Simulamos reinicio de estado
         act(() => {
             result.current.reiniciarEstado();
         });
-        //  Comprobamos que volvió a falso
         expect(result.current.enviado).toBe(false);
     });
 
-    test('useProyectos debe simular la carga asíncrona de datos', async () => {
-        // Tomamos el control de los temporizadores (setTimeout)
+    test('useProyectos debe simular la carga asíncrona de datos con temporizador', async () => {
+        // Activamos temporizadores virtuales para controlar el paso del tiempo en la prueba
         vi.useFakeTimers();
 
-        // Renderizamos el hook
         const { result } = renderHook(() => useProyectos());
 
-        // Comprobamos el estado inicial (cargando = true)
+        // Al inicio, los datos están cargando
         expect(result.current.cargando).toBe(true);
 
-        // Adelantamos el tiempo virtual en 600ms (lo que dura nuestro setTimeout en el hook)
+        // Adelantamos el tiempo virtual 600ms (tiempo del setTimeout)
         act(() => {
             vi.advanceTimersByTime(600);
         });
 
-        // Verificamos que la carga terminó y que hay datos en el arreglo
+        // Verificamos que la carga finalizó y que se cargaron los proyectos
         expect(result.current.cargando).toBe(false);
         expect(result.current.proyectos.length).toBeGreaterThan(0);
 
-        // Devolvemos el control normal del tiempo al sistema
+        // Restauramos los temporizadores reales
         vi.useRealTimers();
     });
 });

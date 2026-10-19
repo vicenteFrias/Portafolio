@@ -1,36 +1,34 @@
-import React from 'react';
-import { Card, Timeline, Typography, Tag } from 'antd';
+import { Card, Timeline, Typography } from 'antd';
 import { BuildOutlined } from '@ant-design/icons';
 import { experienciasData } from '../../data/portafolioData';
+import { ExperienciaItem } from '../molecules/ExperienciaItem';
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Paragraph } = Typography;
 
+
+// Organiza las experiencias laborales en una línea de tiempo.
 export const Experiencia = () => {
     return (
-        <Card id="experiencia" style={{ marginBottom: 24, borderRadius: 16 }}>
-            <Title level={3} style={{ marginBottom: 24 }}>
-                <BuildOutlined style={{ color: '#2563eb', marginRight: 8 }} />
-                Experiencia Laboral
-            </Title>
+        <Card
+            id="experiencia"
+            variant="borderless"
+            style={{ marginBottom: 24, borderRadius: 16, boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}
+        >
+            <div style={{ marginBottom: 24 }}>
+                <Title level={3} style={{ margin: 0 }}>
+                    <BuildOutlined style={{ color: '#2563eb', marginRight: 8 }} />
+                    Experiencia Laboral
+                </Title>
+                <Paragraph type="secondary" style={{ marginTop: 4 }}>
+                    Trayectoria profesional cronológica y desarrollo de competencias en entornos de trabajo reales.
+                </Paragraph>
+            </div>
 
+            {/* Convierte cada experiencia en un punto de la línea de tiempo. */}
             <Timeline
                 items={experienciasData.map((exp, idx) => ({
                     color: '#2563eb',
-                    children: (
-                        <div key={idx} style={{ marginBottom: 12 }}>
-                            <Text strong style={{ fontSize: '1.05rem', display: 'block' }}>
-                                {exp.cargo}
-                            </Text>
-
-                            <Text type="secondary" style={{ display: 'block', marginBottom: 4 }}>
-                                {exp.empresa} • <Tag color="blue">{exp.periodo}</Tag>
-                            </Text>
-
-                            <Paragraph type="secondary" style={{ margin: 0 }}>
-                                {exp.descripcion}
-                            </Paragraph>
-                        </div>
-                    ),
+                    children: <ExperienciaItem key={idx} experiencia={exp} />,
                 }))}
             />
         </Card>
